@@ -3,6 +3,8 @@ import { View } from 'react-native';
 import "../global.css"
 import { useEffect } from 'react';
 import { AuthContextProvider, useAuth } from '../context/authContext';
+import { MenuProvider } from 'react-native-popup-menu';
+
 
 
 const MainLayout = ()=>{
@@ -28,8 +30,10 @@ const MainLayout = ()=>{
 
 export default function RootLayout() {
   return (
-    <AuthContextProvider>
-        <MainLayout/>
-    </AuthContextProvider>
+    <MenuProvider>
+        <AuthContextProvider>
+            <MainLayout/>
+        </AuthContextProvider>
+    </MenuProvider>
   );
 }

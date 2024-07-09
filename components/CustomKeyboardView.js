@@ -1,4 +1,5 @@
 import { View, Text, ScrollView, Platform, KeyboardAvoidingView } from 'react-native'
+import "../global.css"
 
 const ios = Platform.OS == 'ios';
 export default function CustomKeyboardView({children}) {

@@ -7,9 +7,8 @@ export default function home() {
     const handleLogout  = async ()=>{
         await logout();
     }
-    console.log('user: ', user);
   return (
-    <View>
+    <View className='flex-1 bg-white'>
       <Text>home</Text>
       <Pressable onPress={handleLogout}>
             <Text>Sign Out</Text>
