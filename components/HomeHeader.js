@@ -3,7 +3,7 @@ import React from 'react'
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
-import { blurhash } from './common';
+import { blurhash } from '../utils/common';
 import { useAuth } from '../context/authContext';
 import {
     Menu,
