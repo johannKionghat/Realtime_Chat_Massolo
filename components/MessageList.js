@@ -2,9 +2,10 @@ import { View, Text, ScrollView } from 'react-native'
 import React from 'react'
 import MessageItem from './MessageItem';
 
-export default function MessageList({messages, currentUser}) {
+export default function MessageList({messages, scrollViewRef, currentUser}) {
   return (
-    <ScrollView 
+    <ScrollView
+        ref={scrollViewRef}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{paddingTop:10}}
     >

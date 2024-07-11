@@ -26,12 +26,13 @@ export default function home() {
       });
 
       setUsers(data);
-    }
+    };
+  
   return (
     <View className='flex-1 bg-white'>
         {
           users.length>0?(
-              <ChatList users={users} />
+              <ChatList currentUser={user} users={users} />
           ):(
             <View className="flex items-center" style={{top: hp(30)}}>
               <Loading size={hp(10)}/>

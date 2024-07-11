@@ -1,4 +1,4 @@
-import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, Alert, Keyboard } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import { StatusBar } from 'expo-status-bar';
@@ -12,6 +12,7 @@ import { useAuth } from '../../context/authContext';
 import { getRoomId } from '../../utils/common';
 import { addDoc, collection, doc, onSnapshot, orderBy, query, setDoc, Timestamp } from 'firebase/firestore';
 import { db } from '../../firebaseConfig';
+import Animated from 'react-native-reanimated';
 
 
 export default function ChatRoom() {
@@ -21,7 +22,7 @@ export default function ChatRoom() {
     const [messages, setMessages] = useState([]);
     const textRef = useRef('');
     const inputRef = useRef(null);
-
+    const scrollViewRef = useRef(null);
     useEffect(()=>{
       createRoomIfNoExists();
 
@@ -37,8 +38,27 @@ export default function ChatRoom() {
           });
           setMessages([...allMessages]);
       })
-      return unsub;
+      const KeyboardDisShowListener = Keyboard.addListener(
+        'keyboardDidShow', updateScrollView
+      )
+      return ()=>{
+        unsub();
+        KeyboardDisShowListener.remove();
+      };
     },[]);
+
+    useEffect(()=>{
+      updateScrollView();
+    },[messages])
+
+    const updateScrollView = () => {
+      setTimeout(() => {
+        console.log(scrollViewRef.current);
+          if (scrollViewRef.current) {
+              scrollViewRef.current.scrollToEnd({ animated: true });
+          }
+      }, 100);
+  };
 
     const createRoomIfNoExists = async ()=>{
       // roomId
@@ -78,7 +98,7 @@ export default function ChatRoom() {
         <View className="h-3 border-b border-neutral-300"/>
         <View className="flex-1 justify-between bg-neutral-100 overflow-visible" >
           <View className="flex-1" >
-            <MessageList messages = {messages} currentUser={user}/>
+            <MessageList messages = {messages} currentUser={user} scrollViewRef={scrollViewRef}/>
           </View>
           <View style={{marginBottom : hp(2.7)}} className="pt-2">
               {/* input message */}
